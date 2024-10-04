@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea - submmition</title>
+    <style>
+        body {
+            background-color: #220449;
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+        }
+
+        label {
+            display: block;
+            /* font-family:; */
+            font-size: 18px;
+        }
+
+        #submit {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            margin-bottom: 4px;
+            height: 28px;
+            width: 80%;
+            background-color: #ffffff52;
+            border: none;
+            color: white;
+        }
+
+        textarea {
+            color: white;
+            background-color: #ffffff52;
+            width: 80%;
+            height: 90px;
+            border: none;
+        }
+
+        textarea::placeholder {
+            color: white;
+        }
+
+        #trm_lnk {
+            color: red;
+        }
+
+        .trm_c {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page_body">
+        <header>
+            <nav>
+
+            </nav>
+        </header>
+        <main>
+            <div class="site_main">
+                <div class="page_heading_section" style="display: flex; align-items: center;">
+                    <p class="page_heading" style="margin-right: 10px;">TechCraft Idea Collection</p>
+                    <img src="./transparent YY logo.png" alt="" style="height: 30px;">
+                </div>
+                <div class="page_content_section" id="sect2">
+                    <div class="form_container">
+                        <form action="" method="post" id="input_idea">
+                            <input type="hidden" name="Date_Time" id="Date_Time">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" required>
+                            <label for="phn">Phone no.</label>
+                            <input type="tel" name="phn" id="phn" required>
+                            <label for="yr">Passout Year</label>
+                            <input type="number" name="yr" id="yr" min="2025" onchange="validateYear(this)" required>
+                            <label for="prjt">Project Title</label>
+                            <input type="text" name="prjt" id="prjt" required>
+                            <label for="prjd">Project Description</label>
+                            <textarea name="prjd" id="prjd" placeholder="Enter Your Project Description"></textarea>
+                            <p class="terms_text" onclick="handleParagraphClick()">Terms and Conditions <strong
+                                    style="color: red;">Click
+                                    Here to read</strong></p>
+                            <label for="trm">I agree</label>
+                            <input type="checkbox" name="trm" id="trm" value="I agree" required>
+                            <!-- <input type="submit" value="Submit" id="submit"> -->
+                            <button type="submit" id="submit" name="submit" style="width: 80%;"> Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <p id="message_text_container"></p>
+            </div>
+
+        </main>
+        <footer>
+
+        </footer>
+
+
+    </div>
+    <div class="trm_c" id="trm_c">
+        <h1>Terms and Conditions for TechCraft Idea Submission</h1>
+
+        <h2>1. Eligibility:</h2>
+        <p>Participants must be at least <strong>16</strong> years old to submit ideas for the project
+            competition. Each participant or team must register using the official submission form.</p>
+
+        <h2>2. Commitment to Attend:</h2>
+        <p>By submitting your idea, you agree to attend the program if your submission is selected. Attendance is
+            mandatory for all finalists. Failure to attend without prior notification may result in disqualification or
+            Penalty.
+        </p>
+
+        <h2>3. Submission Guidelines:</h2>
+        <ul>
+            <li>All submissions must be original ideas not previously submitted to any other competition.</li>
+            <li>Ideas should be submitted via the official form by the specified deadline of <strong>8/11/2024</strong>.
+            </li>
+        </ul>
+
+        <h2>4. Ownership and Rights:</h2>
+        <ul>
+            <li>Participants retain ownership of their ideas; however, by submitting, you grant
+                <strong>YantraYodha</strong> the right to use your submission for promotional purposes, including but
+                not limited
+                to publications, social media, and websites.
+            </li>
+            <li>You agree not to submit any confidential or proprietary information.</li>
+        </ul>
+        <button onclick="show_form()">Back to form</button>
+    </div>
+    <script>
+        function handleParagraphClick() {
+            // Your custom code here
+            document.getElementById("trm_c").style.display = "block"
+            document.getElementById("sect2").style.display = "none"
+        }
+
+        function show_form() {
+
+            document.getElementById("trm_c").style.display = "none"
+            document.getElementById("sect2").style.display = "block"
+        }
+
+
+
+        function getFormattedDateTime() {
+            const now = new Date();
+
+            // Get date components
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const year = now.getFullYear();
+
+            // Get time components
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'pm' : 'am';
+
+            // Convert to 12-hour format
+            hours = hours % 12;
+            hours = hours ? String(hours).padStart(2, '0') : '12'; // The hour '0' should be '12'
+
+            // Format the final string
+            return `${day}/${month}/${year}   ${hours}:${minutes} ${ampm}`;
+        }
+        var date_inpt = document.getElementById('Date_Time');
+        date_inpt.value = getFormattedDateTime();
+
+        console.log(getFormattedDateTime());
+
+
+        let url = 'https://script.google.com/macros/s/AKfycby7g5p66gKEDS24TmP6mJwV1AG6-DpPLuiOdW5GnOiW-0SpGQWhIrjbp6oeCOk3R8iXCw/exec'
+        let form = document.querySelector('#input_idea')
+        form.addEventListener("submit", (e) => {
+            e.target.submit.innerHTML = "Submitting..";
+
+            let form_data = new FormData(form);
+
+            fetch(url, { method: "POST", body: form_data }).then((res) => res.text())
+                .then((finalRes) => {
+                    e.target.submit.innerHTML = "Submitted";
+                    form.reset();
+                    document.getElementById("sect2").style.display = "none";
+                    document.getElementById("message_text_container").innerText = "Your form has been successfully submitted!!"
+                    setTimeout(() => {
+                        // e.target.submit.innerHTML = "Submit";
+                        window.location.href = 'https://yyaiem.github.io/yy/';
+                    }, 2000)
+                    // // alert
+                    // console.log(finalRes)
+                    // alert(finalRes)
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                })
+
+            e.preventDefault();
+
+        })
+
+        // 
+    </script>
+</body>
+
+</html>
